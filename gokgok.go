@@ -33,7 +33,7 @@ func init() {
 	flaggy.String(&targetList, "t", "targetList", "File with targets to be checked")
 	flaggy.Bool(&scanThem, "s", "scanThem", "Scan the the targets with Nmap")
 	flaggy.String(&parseFiles, "p", "parseFiles", "Parse the nmap resut files, needs the path of the scans")
-	flaggy.Bool(&html, "h", "html", "HTML output")
+	flaggy.Bool(&html, "o", "html", "HTML output")
 }
 
 func main() {
