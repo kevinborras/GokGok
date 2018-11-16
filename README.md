@@ -1,5 +1,5 @@
 # GokGok
-A tool to check domains
+A tool for check domains
 
 ## Requirements
 
