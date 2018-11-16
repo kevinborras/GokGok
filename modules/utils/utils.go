@@ -14,7 +14,7 @@ import (
 	"github.com/fatih/color"
 )
 
-var timeout = time.Duration(3 * time.Second)
+var timeout = time.Duration(5 * time.Second)
 var client = http.Client{
 	Timeout: timeout,
 }
@@ -75,8 +75,8 @@ func RunNmap(ipList []string) {
 	re, _ := regexp.Compile(`^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$`)
 	for _, ip := range ipList {
 		if re.MatchString(ip) {
-			fmt.Fprintf(color.Output, "%v Executing command %s \n", cyan(" [i] INFO: "), "nmap -sV -P0 "+ip+" -oX "+path+"/"+ip+".xml")
-			err := exec.Command("nmap", "-sV", "-P0", ip, "-oX", path+"/"+ip+".xml").Run()
+			fmt.Fprintf(color.Output, "%v Executing command %s \n", cyan(" [i] INFO: "), "nmap -sV -P0 --script vulners "+ip+" -oX "+path+"/"+ip+".xml")
+			err := exec.Command("nmap", "-sV", "-P0", "--script", "vulners", ip, "-oX", path+"/"+ip+".xml").Run()
 			if err != nil {
 				fmt.Fprintln(os.Stderr, err)
 				os.Exit(1)
@@ -90,7 +90,7 @@ func RunNmap(ipList []string) {
 				os.Exit(1)
 			}
 			ip = addr[0]
-			fmt.Fprintf(color.Output, "%v Executing command %s \n", cyan(" [i] INFO: "), "nmap -sV -P0 "+ip+" -oX "+path+"/"+ip+".xml")
+			fmt.Fprintf(color.Output, "%v Executing command %s \n", cyan(" [i] INFO: "), "nmap -sV -P0 --script vulners "+ip+" -oX "+path+"/"+ip+".xml")
 			err = exec.Command("nmap", "-sV", "-P0", ip, "-oX", path+"/"+ip).Run()
 			if err != nil {
 				fmt.Fprintln(os.Stderr, err)
