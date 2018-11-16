@@ -18,6 +18,7 @@ var timeout = time.Duration(3 * time.Second)
 var client = http.Client{
 	Timeout: timeout,
 }
+var path = "nmapResults"
 
 // Color support
 var yellow = color.New(color.Bold, color.FgYellow).SprintFunc()
@@ -68,7 +69,6 @@ func IsAlive(domainList string) (ipList []string) {
 //RunNmap runs a nmap scan
 func RunNmap(ipList []string) {
 
-	path := "nmapResults"
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		os.Mkdir(path, 666)
 	}
@@ -118,4 +118,3 @@ func RunNmap(ipList []string) {
 // result.Status = resp.Status
 // hostList.Info = append(hostList.Info, result)
 // fmt.Println(hostList.Info)
-
