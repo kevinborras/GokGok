@@ -42,13 +42,11 @@ func GetNmapData(path string) {
 
 	for _, f := range files {
 		// Open nmap file
-		// println(f.Name())
 		nmapFile, err := ioutil.ReadFile(path + f.Name())
 		if err != nil {
 			fmt.Fprintf(color.Output, "%v Opening %s \n", red(" [-] ERROR: "), f.Name())
 		}
-		//byteNmap, _ := ioutil.ReadAll(nmapFile)
-		//println(string(nmapFile))
+
 		extractor(nmapFile)
 	}
 
@@ -57,8 +55,6 @@ func GetNmapData(path string) {
 //X returns the open ports and services of the host
 func extractor(nmapFile []byte) (result Hosts) {
 
-	//var aux []map[int]string
-	//var portInfo map[int]string
 	scan, err := nmap.Parse(nmapFile)
 	if err != nil {
 		log.Fatal(err)
@@ -66,10 +62,6 @@ func extractor(nmapFile []byte) (result Hosts) {
 
 	for i, host := range scan.Hosts {
 
-		// h.Hostname = append(h.Hostname, host.Hostnames[i].Name)
-		// for _, ip := range host.Addresses {
-		// 	h.IP = ip.Addr
-		// }
 		fmt.Fprintf(color.Output, "%v Host: %s IP: %s \n", cyan(" [i] INFO: "), host.Hostnames[i].Name, host.Addresses[i].Addr)
 
 		for _, port := range host.Ports {
