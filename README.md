@@ -50,5 +50,4 @@ $ go run gokgok.go -t domainTest.txt -s
 
 ## TODO
 
-+ Parse nmap files
 + Display the results
