@@ -4,6 +4,7 @@ A tool to check domains
 ## Requirements
 
 + Nmap from [Nmap Official Webpage](https://nmap.org/)
++ Vulners Nmap Script [Github](https://github.com/vulnersCom/nmap-vulners)
 
 ***
 
