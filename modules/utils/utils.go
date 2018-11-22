@@ -14,7 +14,7 @@ import (
 	"github.com/fatih/color"
 )
 
-var timeout = time.Duration(5 * time.Second)
+var timeout = time.Duration(10 * time.Second)
 var client = http.Client{
 	Timeout: timeout,
 }
@@ -33,7 +33,12 @@ func getIP(host string) (ip string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	ip = addr[0]
+	//if len == 2 --> addr[IPv6, IPv4]
+	if len(addr) >1{
+		ip = addr[1]
+	} else {
+		ip = addr[0]
+	}
 	return ip
 
 }
@@ -70,7 +75,7 @@ func IsAlive(domainList string) (ipList []string) {
 func RunNmap(ipList []string) {
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		os.Mkdir(path, 666)
+		os.Mkdir(path, 0755)
 	}
 	re, _ := regexp.Compile(`^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$`)
 	for _, ip := range ipList {

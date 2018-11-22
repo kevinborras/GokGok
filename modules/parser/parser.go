@@ -67,8 +67,10 @@ func extractor(nmapFile []byte) (result Hosts) {
 		for _, port := range host.Ports {
 
 			fmt.Fprintf(color.Output, "%v Port: %d Service: %s Version: %s\n", cyan(" [i] INFO: "), port.PortId, port.Service.Name, port.Service.Product+" "+port.Service.Version)
-			if len(port.Scripts) > 1 {
-				fmt.Fprintf(color.Output, "%v CVE's %v \n", cyan(" [i] INFO: "), port.Scripts[1].Output)
+			
+			if len(port.Scripts) >0 {
+				
+				fmt.Fprintf(color.Output, "%v CVE's %v \n", cyan(" [i] INFO: "), port.Scripts[0].Output)
 			}
 
 		}
