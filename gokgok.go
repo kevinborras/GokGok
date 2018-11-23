@@ -53,8 +53,13 @@ func main() {
 		utils.RunNmap(ipList)
 
 	}
-	if parseFiles != "" {
+	if parseFiles != "" && !html {
 		parser.GetNmapData(parseFiles)
+	} else if  parseFiles != "" && html {
+		nmapScans := parser.GetNmapData(parseFiles)
+		for _,host := range nmapScans.List{
+			fmt.Println(host.Hostnames)
+		}
 	}
 
 }

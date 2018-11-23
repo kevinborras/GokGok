@@ -29,7 +29,7 @@ type Hosts struct {
 }
 
 //GetNmapData returns the open ports and services of the host
-func GetNmapData(path string) {
+func GetNmapData(path string) (result Hosts){
 
 	if path[len(path)-1:] != "/" {
 		path = path + "/"
@@ -46,13 +46,31 @@ func GetNmapData(path string) {
 		if err != nil {
 			fmt.Fprintf(color.Output, "%v Opening %s \n", red(" [-] ERROR: "), f.Name())
 		}
+		scan, err := nmap.Parse(nmapFile)
+		if err != nil {
+			log.Fatal(err)
+		}
+		for i, host := range scan.Hosts {
 
-		extractor(nmapFile)
+			fmt.Fprintf(color.Output, "%v Host: %s IP: %s \n", cyan(" [i] INFO: "), host.Hostnames[i].Name, host.Addresses[i].Addr)
+	
+			for _, port := range host.Ports {
+	
+				fmt.Fprintf(color.Output, "%v Port: %d Service: %s Version: %s\n", cyan(" [i] INFO: "), port.PortId, port.Service.Name, port.Service.Product+" "+port.Service.Version)
+				
+				if len(port.Scripts) >0 {
+					
+					fmt.Fprintf(color.Output, "%v CVE's %v \n", cyan(" [i] INFO: "), port.Scripts[0].Output)
+				}
+	
+			}
+			result.List = append(result.List, host)
+		}
 	}
-
+	return result
 }
 
-//X returns the open ports and services of the host
+/*X returns the open ports and services of the host
 func extractor(nmapFile []byte) (result Hosts) {
 
 	scan, err := nmap.Parse(nmapFile)
@@ -75,8 +93,9 @@ func extractor(nmapFile []byte) (result Hosts) {
 
 		}
 		result.List = append(result.List, host)
-
+		//return host
 	}
-
+	fmt.Println(len(result.List))
 	return result
 }
+*/
