@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/kevinborras/GokGok/modules/webapp"
 	"fmt"
 	"os"
 
@@ -8,6 +9,7 @@ import (
 	"github.com/integrii/flaggy"
 	"github.com/kevinborras/GokGok/modules/parser"
 	"github.com/kevinborras/GokGok/modules/utils"
+	
 )
 
 // Color support
@@ -56,10 +58,8 @@ func main() {
 	if parseFiles != "" && !html {
 		parser.GetNmapData(parseFiles)
 	} else if  parseFiles != "" && html {
-		nmapScans := parser.GetNmapData(parseFiles)
-		for _,host := range nmapScans.List{
-			fmt.Println(host.Hostnames)
-		}
+		webapp.NmapResults = parser.GetNmapData(parseFiles)
+		webapp.Init()
 	}
 
 }
