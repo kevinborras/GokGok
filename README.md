@@ -84,6 +84,46 @@ $ go run gokgok.go -p nmapResults
  [i] INFO:  Port: 31337 Service: ncat-chat Version: Ncat chat
 ```
 
++ Display the results
+
+```bash
+go run gokgok.go -p nmapResults/ -o
+ [i] INFO:  Host: prg03s06-in-f227.1e100.net IP: 172.217.23.227
+ [i] INFO:  Port: 80 Service: http Version: gws
+ [i] INFO:  Port: 443 Service: https Version: gws
+ [i] INFO:  Host: scanme.nmap.org IP: 45.33.32.156
+ [i] INFO:  Port: 22 Service: ssh Version:
+ [i] INFO:  Port: 80 Service: http Version: Apache httpd 2.4.7
+ [i] INFO:  CPE   cpe:/a:apache:http_server:2.4.7:
+ [i] INFO:  CVE         CVE-2017-7679           7.5             https://vulners.com/cve/CVE-2017-7679
+ [i] INFO:  CVE         CVE-2018-1312           6.8             https://vulners.com/cve/CVE-2018-1312
+ [i] INFO:  CVE         CVE-2017-15715          6.8             https://vulners.com/cve/CVE-2017-15715
+ [i] INFO:  CVE         CVE-2014-0226           6.8             https://vulners.com/cve/CVE-2014-0226
+ [i] INFO:  CVE         CVE-2017-9788           6.4             https://vulners.com/cve/CVE-2017-9788
+ [i] INFO:  CVE         CVE-2017-15710          5               https://vulners.com/cve/CVE-2017-15710
+ [i] INFO:  CVE         CVE-2014-0098           5               https://vulners.com/cve/CVE-2014-0098
+ [i] INFO:  CVE         CVE-2014-0231           5               https://vulners.com/cve/CVE-2014-0231
+ [i] INFO:  CVE         CVE-2016-0736           5               https://vulners.com/cve/CVE-2016-0736
+ [i] INFO:  CVE         CVE-2016-2161           5               https://vulners.com/cve/CVE-2016-2161
+ [i] INFO:  CVE         CVE-2016-8743           5               https://vulners.com/cve/CVE-2016-8743
+ [i] INFO:  CVE         CVE-2014-3523           5               https://vulners.com/cve/CVE-2014-3523
+ [i] INFO:  CVE         CVE-2013-6438           5               https://vulners.com/cve/CVE-2013-6438
+ [i] INFO:  CVE         CVE-2017-9798           5               https://vulners.com/cve/CVE-2017-9798
+ [i] INFO:  CVE         CVE-2016-4975           4.3             https://vulners.com/cve/CVE-2016-4975
+ [i] INFO:  CVE         CVE-2014-0117           4.3             https://vulners.com/cve/CVE-2014-0117
+ [i] INFO:  CVE         CVE-2014-8109           4.3             https://vulners.com/cve/CVE-2014-8109
+ [i] INFO:  CVE         CVE-2015-3185           4.3             https://vulners.com/cve/CVE-2015-3185
+ [i] INFO:  CVE         CVE-2014-0118           4.3             https://vulners.com/cve/CVE-2014-0118
+ [i] INFO:  CVE         CVE-2018-1283           3.5             https://vulners.com/cve/CVE-2018-1283
+ [i] INFO:  CVE         CVE-2016-8612           3.3             https://vulners.com/cve/CVE-2016-8612
+ [i] INFO:  Port: 9929 Service: nping-echo Version: Nping echo
+ [i] INFO:  Port: 31337 Service: tcpwrapped Version:
+2018/11/24 13:53:11  -  Listening on port 8080...
+```
+!["Namp"](img/example1.png)
+!["CVE"](img/example2.png)
+
+
 ## TODO
 
 + Display the results
