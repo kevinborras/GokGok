@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+<link rel="icon" href="static/favicon.ico" type="image/x-icon">
+<title>GokGok</title>
+</head>
+<body>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Gok-Gok</a>
+     
+      </nav>
+  
+      <div class="container-fluid">
+        <div class="row">
+          <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link active" href="/">
+                    <span data-feather="home"></span>
+                    Nmap 
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="cve">
+                    <span data-feather="bar-chart-2"></span>
+                    CVE's<span class="sr-only">(current)</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <span data-feather="layers"></span>
+                    Subdomains
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+  
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+        
+        <div class="table-responsive">
+       {{ range .Hostnames }}
+            <h3>{{.Name}}</h3>
+        {{end}}
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th align="center">CPE</th>
+                        <th align="center">CVE</th>
+                        <th align="center">Score</th>
+                        <th align="center">URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        {{ range .ListCVE}}
+                    <tr>
+                        <td>{{.CPE}}</td>
+                        <td>{{.ID}}</td>
+                        <td>{{.Score}}</td>
+                        <td>{{.URL}}</td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>  
+        
+        </div>
+          </main>
+        </div>
+      </div>
+</body>
+</html>

@@ -3,7 +3,6 @@ package webapp
 import (
 	
 	"github.com/kevinborras/GokGok/modules/parser"
-	//"fmt"
 	"html/template"
 	"net/http"
 	"github.com/op/go-logging"
@@ -11,7 +10,7 @@ import (
 )
 
 var NmapResults parser.Hosts
-
+var CVEHost parser.CVEHost
 //Format
 var log = logging.MustGetLogger("example")
 var format = logging.MustStringFormatter(
@@ -20,7 +19,6 @@ var format = logging.MustStringFormatter(
 
 func mainpage(w http.ResponseWriter, r *http.Request ) {
 	log.Info(" -  Method:", r.Method, " - /")
-	//fmt.Println(NmapResults.List)
 	if r.Method == "GET" {
 		t, _ := template.ParseFiles("modules/webapp/html/index.html")
 		t.Execute(w, NmapResults)
@@ -29,9 +27,20 @@ func mainpage(w http.ResponseWriter, r *http.Request ) {
 	}
 }
 
+func cvePage(w http.ResponseWriter, r *http.Request ) {
+	log.Info(" -  Method:", r.Method, " - /cve")
+	if r.Method == "GET" {
+		t, _ := template.ParseFiles("modules/webapp/html/cve.html")
+		t.Execute(w, CVEHost)
+	} else {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
+}
+
 //Init starts the web server 
 func Init() {
 	http.HandleFunc("/", mainpage)
+	http.HandleFunc("/cve", cvePage)
 	fileServer := http.FileServer(http.Dir("html/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
 

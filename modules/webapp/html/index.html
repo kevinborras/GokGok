@@ -24,13 +24,13 @@
             <div class="sidebar-sticky">
               <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link active" href="#">
+                  <a class="nav-link active" href="/">
                     <span data-feather="home"></span>
                     Nmap <span class="sr-only">(current)</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="cve">
                     <span data-feather="bar-chart-2"></span>
                     CVE's
                   </a>
@@ -53,14 +53,16 @@
                     <h3>{{.Name}}</h3>
                     {{ end }}
                     <div class="table-responsive">
-                    <table class="table table-dark">
+                    <table class="table table-light">
                             <thead>
                                 <tr>
-                                    <th scope="col">Port</th>
-                                    <th scope="col">Service</th>
-                                    <th scope="col">Product</th>
-                                    <th scope="col">Version</th>
+                                    <th scope="col" align="center">Port</th>
+                                    <th scope="col" align="center">Service</th>
+                                    <th scope="col" align="center">Product</th>
+                                    <th scope="col" align="center">Version</th>
                                 </tr>
+                            </thead>
+                            <tbody>
                                 {{ range .Ports }}
                                 <tr>
                                 
@@ -80,7 +82,7 @@
                                     {{ end }}
                                 </tr>
                                 {{ end }}
-                            </thead>
+                            </tbody>
                         </table>
                     {{ end }}
                 </div>

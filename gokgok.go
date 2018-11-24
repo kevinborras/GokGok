@@ -58,7 +58,7 @@ func main() {
 	if parseFiles != "" && !html {
 		parser.GetNmapData(parseFiles)
 	} else if  parseFiles != "" && html {
-		webapp.NmapResults = parser.GetNmapData(parseFiles)
+		webapp.NmapResults,webapp.CVEHost = parser.GetNmapData(parseFiles)
 		webapp.Init()
 	}
 
