@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"strings"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -16,12 +17,18 @@ var cyan = color.New(color.Bold, color.FgCyan).SprintFunc()
 var green = color.New(color.Bold, color.FgGreen).SprintFunc()
 
 //Host contains the fields with the required information
-// type Host struct {
-// 	Hostname []string
-// 	IP       string
-// 	Ports    []map[int]string
-// 	Status   string
-// }
+type Host struct {
+ 	Hostnames []nmap.Hostname
+ 	CVElist   []CVE
+ }
+
+ //CVE -- CPE, CVE number, CVSS base Score, and URL
+ type CVE struct {
+	 CPE string
+	 ID	string
+	 Score string
+	 URL string
+ }
 
 //Hosts contains a slice of Host
 type Hosts struct {
@@ -30,6 +37,9 @@ type Hosts struct {
 
 //GetNmapData returns the open ports and services of the host
 func GetNmapData(path string) (result Hosts){
+
+	var h Host
+	var cve CVE
 
 	if path[len(path)-1:] != "/" {
 		path = path + "/"
@@ -51,19 +61,27 @@ func GetNmapData(path string) (result Hosts){
 			log.Fatal(err)
 		}
 		for i, host := range scan.Hosts {
-
+			h.Hostnames = host.Hostnames
 			fmt.Fprintf(color.Output, "%v Host: %s IP: %s \n", cyan(" [i] INFO: "), host.Hostnames[i].Name, host.Addresses[i].Addr)
-	
+			h.Hostnames = host.Hostnames
 			for _, port := range host.Ports {
 	
 				fmt.Fprintf(color.Output, "%v Port: %d Service: %s Version: %s\n", cyan(" [i] INFO: "), port.PortId, port.Service.Name, port.Service.Product+" "+port.Service.Version)
-				
 				if len(port.Scripts) >0 {
+					aux := strings.Split(port.Scripts[0].Output,"\n")
+					for i,value:= range aux{
+						if i == 1{
+							cve.CPE = value
+							fmt.Fprintf(color.Output, "%v CPE %v \n", cyan(" [i] INFO: "), value)
+						} else if i !=0 || i >1{
+							fmt.Fprintf(color.Output, "%v CVE %v \n", cyan(" [i] INFO: "), value)
+					}
+					}
 					
-					fmt.Fprintf(color.Output, "%v CVE's %v \n", cyan(" [i] INFO: "), port.Scripts[0].Output)
 				}
 	
 			}
+			//fmt.Println(h)
 			result.List = append(result.List, host)
 		}
 	}
