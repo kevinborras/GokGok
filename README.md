@@ -127,3 +127,4 @@ go run gokgok.go -p nmapResults/ -o
 ## TODO
 
 + Display the results
++ Enumereate subdomains
