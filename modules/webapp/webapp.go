@@ -2,7 +2,7 @@ package webapp
 
 import (
 	
-	"github.com/kevinborras/GokGok/modules/parser"
+	parser "github.com/kevinborras/GokGok/modules/parser/nmap"
 	"html/template"
 	"net/http"
 	"github.com/op/go-logging"

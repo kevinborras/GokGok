@@ -1,15 +1,14 @@
 package main
 
 import (
-	"github.com/kevinborras/GokGok/modules/webapp"
 	"fmt"
+	"github.com/kevinborras/GokGok/modules/webapp"
 	"os"
 
 	"github.com/fatih/color"
 	"github.com/integrii/flaggy"
-	"github.com/kevinborras/GokGok/modules/parser"
+	parser "github.com/kevinborras/GokGok/modules/parser/nmap"
 	"github.com/kevinborras/GokGok/modules/utils"
-	
 )
 
 // Color support
@@ -57,8 +56,8 @@ func main() {
 	}
 	if parseFiles != "" && !html {
 		parser.GetNmapData(parseFiles)
-	} else if  parseFiles != "" && html {
-		webapp.NmapResults,webapp.CVEHost = parser.GetNmapData(parseFiles)
+	} else if parseFiles != "" && html {
+		webapp.NmapResults, webapp.CVEHost = parser.GetNmapData(parseFiles)
 		webapp.Init()
 	}
 
