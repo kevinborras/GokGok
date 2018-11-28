@@ -30,7 +30,7 @@ func GetMapfromCRT(domain string) map[string]bool {
 	// we need to get ?id=XXXXX
 	res := re.FindAllString(string(body), -1)
 
-	//once we have this id, we iterate over the results and extract only the subdomains
+	//once we have this id, we have to iterate over the results and extract only the subdomains
 	for i, id := range res {
 		req, err := http.NewRequest("GET", "https://crt.sh/"+id+"&output=json", nil)
 		if err != nil {
