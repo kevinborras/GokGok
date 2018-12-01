@@ -1,5 +1,5 @@
 # GokGok
-A tool for check domains
+GokGok it's a tool for analyze and discover domains and subdomains. It uses passive methods for enumerate subdomains and it's written in Go.
 
 ## Requirements
 
