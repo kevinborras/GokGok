@@ -19,7 +19,7 @@ var cyan = color.New(color.Bold, color.FgCyan).SprintFunc()
 var green = color.New(color.Bold, color.FgGreen).SprintFunc()
 
 //VERSION of the program
-var VERSION = `v1.0.0`
+var VERSION = `v0.0.9b`
 
 var targetList, parseFiles, domain string
 var version, scanThem, html, subdomains = false, false, false, false
