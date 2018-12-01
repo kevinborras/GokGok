@@ -1,6 +1,7 @@
 package dnsdumpster
 
 import (
+	"github.com/kevinborras/GokGok/modules/parser/auxiliary"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -10,18 +11,12 @@ import (
 	"time"
 )
 
-//DNSDumpster is a struct with the domain and a map with the subdomains
-type DNSDumpster struct {
-	Domain     string
-	Subdomains map[string]bool
-}
-
 var client = &http.Client{Timeout: time.Second * 10}
 
 //regex for csrftoken
 var re = regexp.MustCompile(`^csrftoken=([\S\s]{32}\;)`)
 
-func GetMapFromDumpster(domain string) (dnsD DNSDumpster) {
+func GetMapFromDumpster(domain string) (dnsD auxiliary.Domain) {
 	csrfToken, cookie := getCSRFToken()
 	subdomains := make(map[string]bool)
 

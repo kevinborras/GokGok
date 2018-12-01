@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/integrii/flaggy"
+	"github.com/kevinborras/GokGok/modules/parser/auxiliary"
 	crtsh "github.com/kevinborras/GokGok/modules/parser/crtsh"
 	parser "github.com/kevinborras/GokGok/modules/parser/nmap"
 	"github.com/kevinborras/GokGok/modules/utils"
@@ -57,7 +58,7 @@ func main() {
 		utils.RunNmap(ipList)
 
 	} else if targetList != "" && subdomains {
-		var aux crtsh.CRTSH
+		var aux auxiliary.Domain
 		file, err := os.Open(targetList)
 		if err != nil {
 			fmt.Fprintf(color.Output, red(" [-] ERROR: "), err)
@@ -75,7 +76,7 @@ func main() {
 		}
 	}
 	if domain != "" && subdomains {
-		var aux crtsh.CRTSH
+		var aux auxiliary.Domain
 		fmt.Fprintf(color.Output, "%v Checking for subdomains of %s in crt.sh \n", cyan(" [i] INFO: "), domain)
 		aux = crtsh.GetMapfromCRT(domain)
 		fmt.Fprintf(color.Output, "%v %s \n", cyan(" [i] DOMAIN: "), aux.Domain)

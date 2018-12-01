@@ -1,6 +1,7 @@
 package crtsh
 
 import (
+	"github.com/kevinborras/GokGok/modules/parser/auxiliary"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -8,18 +9,12 @@ import (
 	"time"
 )
 
-//CRTSH is a struct with the domain and a map with the subdomains
-type CRTSH struct {
-	Domain     string
-	Subdomains map[string]bool
-}
-
 var client = &http.Client{Timeout: time.Second * 15}
 
 var re = regexp.MustCompile(`\?id=[0-9]+`)
 
 //GetMapfromCRT returns a map with all the subdomains of crt.sh
-func GetMapfromCRT(domain string) (crtsh CRTSH) {
+func GetMapfromCRT(domain string) (crtsh auxiliary.Domain) {
 	subdomains := make(map[string]bool)
 	req, err := http.NewRequest("GET", "https://crt.sh/?q="+domain, nil)
 	if err != nil {
