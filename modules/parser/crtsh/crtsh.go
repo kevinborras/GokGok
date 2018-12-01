@@ -67,5 +67,6 @@ func GetMapfromCRT(domain string, crtsh chan auxiliary.Domain) {
 	}
 	d.Domain = domain
 	d.Subdomains = subdomains
+	d.Source = "cert.sh"
 	crtsh <- d
 }

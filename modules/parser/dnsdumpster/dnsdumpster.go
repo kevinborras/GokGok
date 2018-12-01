@@ -55,6 +55,7 @@ func GetMapFromDumpster(domain string, dnsD chan auxiliary.Domain) {
 	}
 	// fmt.Println(subdomainsList)
 	d.Domain = domain
+	d.Source = "dnsdumpster"
 	dnsD <- d
 }
 

@@ -4,4 +4,5 @@ package auxiliary
 type Domain struct {
 	Domain     string
 	Subdomains map[string]bool
+	Source     string
 }
