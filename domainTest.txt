@@ -1,3 +1,0 @@
-scanme.nmap.org
-ford.com
-ikea.com
