@@ -14,8 +14,9 @@ var client = &http.Client{Timeout: time.Second * 15}
 var re = regexp.MustCompile(`\?id=[0-9]+`)
 
 //GetMapfromCRT returns a map with all the subdomains of crt.sh
-func GetMapfromCRT(domain string) (crtsh auxiliary.Domain) {
+func GetMapfromCRT(domain string, crtsh chan auxiliary.Domain) {
 	subdomains := make(map[string]bool)
+	var d auxiliary.Domain
 	req, err := http.NewRequest("GET", "https://crt.sh/?q="+domain, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -64,7 +65,7 @@ func GetMapfromCRT(domain string) (crtsh auxiliary.Domain) {
 		}
 
 	}
-	crtsh.Domain = domain
-	crtsh.Subdomains = subdomains
-	return crtsh
+	d.Domain = domain
+	d.Subdomains = subdomains
+	crtsh <- d
 }

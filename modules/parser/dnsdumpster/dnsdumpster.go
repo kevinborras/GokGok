@@ -16,10 +16,10 @@ var client = &http.Client{Timeout: time.Second * 10}
 //regex for csrftoken
 var re = regexp.MustCompile(`^csrftoken=([\S\s]{32}\;)`)
 
-func GetMapFromDumpster(domain string) (dnsD auxiliary.Domain) {
+func GetMapFromDumpster(domain string, dnsD chan auxiliary.Domain) {
 	csrfToken, cookie := getCSRFToken()
 	subdomains := make(map[string]bool)
-
+	var d auxiliary.Domain
 	data := url.Values{}
 	data.Set("csrfmiddlewaretoken", csrfToken)
 	data.Set("targetip", domain)
@@ -51,11 +51,11 @@ func GetMapFromDumpster(domain string) (dnsD auxiliary.Domain) {
 	subdomainsList := re.FindAllString(string(body), -1)
 	for _, v := range subdomainsList {
 		subdomains[re2.FindStringSubmatch(v)[1]] = true
-		dnsD.Subdomains = subdomains
+		d.Subdomains = subdomains
 	}
 	// fmt.Println(subdomainsList)
-	dnsD.Domain = domain
-	return dnsD
+	d.Domain = domain
+	dnsD <- d
 }
 
 //Get the CSRF token from dnsdumpster.com
