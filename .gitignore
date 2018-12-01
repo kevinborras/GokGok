@@ -152,5 +152,8 @@ build
 # nmap result folder
 nmapResults/*
 
+# test file
+domainTest.text
+
 # rsrc syso output
 *.syso
