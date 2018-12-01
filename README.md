@@ -17,21 +17,24 @@ github.com/tomsteele/go-nmap
 ## Usage
 
 ```bash
-$ go run gokgok.go -h
+➜  GokGok git:(dev) ✗ go run gokgok.go -h
 Gok-Gok - Is something there?
 
   Flags:
     -h --help  Displays help with available flag, subcommand, and positional value parameters.
     -v --version  Print version
     -t --targetList  File with targets to be checked
+    -d --domain  Domain is used with -d
+    -sd --subdomains  Enumerate subdomains
     -s --scanThem  Scan the the targets with Nmap
     -p --parseFiles  Parse the nmap resut files, needs the path of the scans
     -o --html  HTML output
 ```
+
 + Check if hosts are up or down
 
 ```bash
-$ go run gokgok.go -t domainTest.txt
+➜  GokGok git:(dev) ✗  go run gokgok.go -t domainTest.txt
  [+] SUCCESS:  Host scanme.nmap.org is alive with 200 OK
  [+] SUCCESS:  Host google.com is alive with 200 OK
  [+] SUCCESS:  Host wikipedia.org is alive with 200 OK
@@ -42,7 +45,7 @@ $ go run gokgok.go -t domainTest.txt
 + Launch nmap over alive hosts (Scans will be saved in the nmapResults directory)
 
 ```bash
-$ go run gokgok.go -t domainTest.txt -s
+➜  GokGok git:(dev) ✗  go run gokgok.go -t domainTest.txt -s
  [+] SUCCESS:  Host scanme.nmap.org is alive with 200 OK
  [-] ERROR:  No such host or it's down: icsdfsdfsd.es
  [-] ERROR:  No such host or it's down: werwerwer.com
@@ -53,7 +56,7 @@ $ go run gokgok.go -t domainTest.txt -s
 + Parse nmap files
 
 ```bash
-$ go run gokgok.go -p nmapResults
+➜  GokGok git:(dev) ✗  go run gokgok.go -p nmapResults
  [i] INFO:  Host: scanme.nmap.org IP: 45.33.32.156
  [i] INFO:  Port: 22 Service: ssh Version: OpenSSH 6.6.1p1 Ubuntu 2ubuntu2.11
  [i] INFO:  Port: 80 Service: http Version: Apache httpd 2.4.7
@@ -87,7 +90,7 @@ $ go run gokgok.go -p nmapResults
 + Display the results
 
 ```bash
-go run gokgok.go -p nmapResults/ -o
+➜  GokGok git:(dev) ✗ go run gokgok.go -p nmapResults/ -o
  [i] INFO:  Host: prg03s06-in-f227.1e100.net IP: 172.217.23.227
  [i] INFO:  Port: 80 Service: http Version: gws
  [i] INFO:  Port: 443 Service: https Version: gws
@@ -123,6 +126,35 @@ go run gokgok.go -p nmapResults/ -o
 !["Namp"](img/example1.png)
 !["CVE"](img/example2.png)
 
++ Enumerate subdomains
+
+```bash
+➜  GokGok git:(dev) ✗ go run gokgok.go -t domainTest.txt -sd
+ [i] INFO:  Checking for subdomains of  in crt.sh
+ [i] DOMAIN:  scanme.nmap.org
+ [i] DOMAIN:  ford.com
+ [+] SUBDOMAIN FOUND:  quickquote.ford.com
+ [+] SUBDOMAIN FOUND:  commercialsolutions.ford.com
+ [+] SUBDOMAIN FOUND:  m.ford.com
+ [+] SUBDOMAIN FOUND:  accessories.ford.com
+ [...]
+ [i] DOMAIN:  ikea.com
+ [+] SUBDOMAIN FOUND:  www2.ikea.com
+ [+] SUBDOMAIN FOUND:  iows.ikea.com
+ [+] SUBDOMAIN FOUND:  arassetimages.ikea.com
+ [+] SUBDOMAIN FOUND:  tw.ikea.com
+```
+
+```bash
+➜  GokGok git:(dev) ✗ go run gokgok.go -d ford.com -sd
+ [i] INFO:  Checking for subdomains of ford.com in crt.sh
+ [i] DOMAIN:  ford.com
+ [+] SUBDOMAIN FOUND:  mymustang.ford.com
+ [+] SUBDOMAIN FOUND:  build.ford.com
+ [+] SUBDOMAIN FOUND:  shoppingtools.ford.com
+ [+] SUBDOMAIN FOUND:  socialqa.ford.com
+ [+] SUBDOMAIN FOUND:  vrmedia.ford.com
+```
 
 ## TODO
 
