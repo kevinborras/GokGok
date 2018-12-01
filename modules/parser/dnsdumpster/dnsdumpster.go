@@ -1,7 +1,6 @@
 package dnsdumpster
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -11,13 +10,20 @@ import (
 	"time"
 )
 
+//DNSDumpster is a struct with the domain and a map with the subdomains
+type DNSDumpster struct {
+	Domain     string
+	Subdomains map[string]bool
+}
+
 var client = &http.Client{Timeout: time.Second * 10}
 
 //regex for csrftoken
 var re = regexp.MustCompile(`^csrftoken=([\S\s]{32}\;)`)
 
-func GetMapFromDumpster(domain string) {
+func GetMapFromDumpster(domain string) (dnsD DNSDumpster) {
 	csrfToken, cookie := getCSRFToken()
+	subdomains := make(map[string]bool)
 
 	data := url.Values{}
 	data.Set("csrfmiddlewaretoken", csrfToken)
@@ -46,9 +52,15 @@ func GetMapFromDumpster(domain string) {
 	}
 
 	re := regexp.MustCompile(`"col-md-4">[A-Za-z0-9]+\.(` + domain + `)<br>`)
+	re2 := regexp.MustCompile(`"col-md-4">(.*?)<br>`)
 	subdomainsList := re.FindAllString(string(body), -1)
-	fmt.Println(subdomainsList)
-
+	for _, v := range subdomainsList {
+		subdomains[re2.FindStringSubmatch(v)[1]] = true
+		dnsD.Subdomains = subdomains
+	}
+	// fmt.Println(subdomainsList)
+	dnsD.Domain = domain
+	return dnsD
 }
 
 //Get the CSRF token from dnsdumpster.com
