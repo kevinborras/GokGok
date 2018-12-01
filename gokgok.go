@@ -1,14 +1,15 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"github.com/kevinborras/GokGok/modules/webapp"
-	"os"
-
 	"github.com/fatih/color"
 	"github.com/integrii/flaggy"
+	crtsh "github.com/kevinborras/GokGok/modules/parser/crtsh"
 	parser "github.com/kevinborras/GokGok/modules/parser/nmap"
 	"github.com/kevinborras/GokGok/modules/utils"
+	"github.com/kevinborras/GokGok/modules/webapp"
+	"os"
 )
 
 // Color support
@@ -20,8 +21,8 @@ var green = color.New(color.Bold, color.FgGreen).SprintFunc()
 //VERSION of the program
 var VERSION = `v1.0.0`
 
-var targetList, parseFiles string
-var version, scanThem, html = false, false, false
+var targetList, parseFiles, domain string
+var version, scanThem, html, subdomains = false, false, false, false
 
 func init() {
 
@@ -32,6 +33,8 @@ func init() {
 
 	flaggy.Bool(&version, "v", "version", "Print version")
 	flaggy.String(&targetList, "t", "targetList", "File with targets to be checked")
+	flaggy.String(&domain, "d", "domain", "Domain is used with -d")
+	flaggy.Bool(&subdomains, "sd", "subdomains", "Enumerate subdomains")
 	flaggy.Bool(&scanThem, "s", "scanThem", "Scan the the targets with Nmap")
 	flaggy.String(&parseFiles, "p", "parseFiles", "Parse the nmap resut files, needs the path of the scans")
 	flaggy.Bool(&html, "o", "html", "HTML output")
@@ -46,12 +49,39 @@ func main() {
 		os.Exit(0)
 	}
 
-	if targetList != "" && !scanThem {
+	if targetList != "" && !scanThem && !subdomains {
 		utils.IsAlive(targetList)
 
-	} else if targetList != "" && scanThem {
+	} else if targetList != "" && scanThem && !subdomains {
 		ipList := utils.IsAlive(targetList)
 		utils.RunNmap(ipList)
+
+	} else if targetList != "" && subdomains {
+		var aux crtsh.CRTSH
+		file, err := os.Open(targetList)
+		if err != nil {
+			fmt.Fprintf(color.Output, red(" [-] ERROR: "), err)
+		}
+		defer file.Close()
+		fmt.Fprintf(color.Output, "%v Checking for subdomains of %s in crt.sh \n", cyan(" [i] INFO: "), domain)
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			domain := scanner.Text()
+			fmt.Fprintf(color.Output, "%v %s \n", cyan(" [i] DOMAIN: "), domain)
+			aux = crtsh.GetMapfromCRT(domain)
+			for k, _ := range aux.Subdomains {
+				fmt.Fprintf(color.Output, "%v %s  \n", green(" [+] SUBDOMAIN FOUND: "), k)
+			}
+		}
+	}
+	if domain != "" && subdomains {
+		var aux crtsh.CRTSH
+		fmt.Fprintf(color.Output, "%v Checking for subdomains of %s in crt.sh \n", cyan(" [i] INFO: "), domain)
+		aux = crtsh.GetMapfromCRT(domain)
+		fmt.Fprintf(color.Output, "%v %s \n", cyan(" [i] DOMAIN: "), aux.Domain)
+		for k, _ := range aux.Subdomains {
+			fmt.Fprintf(color.Output, "%v %s  \n", green(" [+] SUBDOMAIN FOUND: "), k)
+		}
 
 	}
 	if parseFiles != "" && !html {

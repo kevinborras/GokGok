@@ -8,11 +8,18 @@ import (
 	"time"
 )
 
+//CRTSH is a struct with the domain and a map with the subdomains
+type CRTSH struct {
+	Domain     string
+	Subdomains map[string]bool
+}
+
 var client = &http.Client{Timeout: time.Second * 15}
 
 var re = regexp.MustCompile(`\?id=[0-9]+`)
 
-func GetMapfromCRT(domain string) map[string]bool {
+//GetMapfromCRT returns a map with all the subdomains of crt.sh
+func GetMapfromCRT(domain string) (crtsh CRTSH) {
 	subdomains := make(map[string]bool)
 	req, err := http.NewRequest("GET", "https://crt.sh/?q="+domain, nil)
 	if err != nil {
@@ -62,5 +69,7 @@ func GetMapfromCRT(domain string) map[string]bool {
 		}
 
 	}
-	return subdomains
+	crtsh.Domain = domain
+	crtsh.Subdomains = subdomains
+	return crtsh
 }

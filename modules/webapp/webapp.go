@@ -1,23 +1,22 @@
 package webapp
 
 import (
-	
 	parser "github.com/kevinborras/GokGok/modules/parser/nmap"
+	"github.com/op/go-logging"
 	"html/template"
 	"net/http"
-	"github.com/op/go-logging"
-
 )
 
 var NmapResults parser.Hosts
 var CVEHost parser.CVEHost
+
 //Format
 var log = logging.MustGetLogger("example")
 var format = logging.MustStringFormatter(
 	`%{color}%{time:15:04:05.000} %{shortfunc} ▶ %{level:.4s} %{id:03x}%{color:reset} %{message}`,
 )
 
-func mainpage(w http.ResponseWriter, r *http.Request ) {
+func mainpage(w http.ResponseWriter, r *http.Request) {
 	log.Info(" -  Method:", r.Method, " - /")
 	if r.Method == "GET" {
 		t, _ := template.ParseFiles("modules/webapp/html/index.html")
@@ -27,7 +26,7 @@ func mainpage(w http.ResponseWriter, r *http.Request ) {
 	}
 }
 
-func cvePage(w http.ResponseWriter, r *http.Request ) {
+func cvePage(w http.ResponseWriter, r *http.Request) {
 	log.Info(" -  Method:", r.Method, " - /cve")
 	if r.Method == "GET" {
 		t, _ := template.ParseFiles("modules/webapp/html/cve.html")
@@ -37,7 +36,7 @@ func cvePage(w http.ResponseWriter, r *http.Request ) {
 	}
 }
 
-//Init starts the web server 
+//Init starts the web server
 func Init() {
 	http.HandleFunc("/", mainpage)
 	http.HandleFunc("/cve", cvePage)
