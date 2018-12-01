@@ -130,30 +130,37 @@ Gok-Gok - Is something there?
 
 ```bash
 ➜  GokGok git:(dev) ✗ go run gokgok.go -t domainTest.txt -sd
- [i] INFO:  Checking for subdomains of  in crt.sh
- [i] DOMAIN:  scanme.nmap.org
- [i] DOMAIN:  ford.com
- [+] SUBDOMAIN FOUND:  quickquote.ford.com
- [+] SUBDOMAIN FOUND:  commercialsolutions.ford.com
- [+] SUBDOMAIN FOUND:  m.ford.com
- [+] SUBDOMAIN FOUND:  accessories.ford.com
- [...]
+ [i] INFO:  Checking for subdomains
  [i] DOMAIN:  ikea.com
- [+] SUBDOMAIN FOUND:  www2.ikea.com
- [+] SUBDOMAIN FOUND:  iows.ikea.com
- [+] SUBDOMAIN FOUND:  arassetimages.ikea.com
- [+] SUBDOMAIN FOUND:  tw.ikea.com
-```
+ [+] cert.sh: dexf.ikea.com
+ [+] cert.sh: ww8.ikea.com
+ [+] cert.sh: kitchenplanner.ikea.com
+[...]
+ [+] dnsdumpster: autodiscover.ikea.com
+ [+] dnsdumpster: business.ikea.com
+ [+] dnsdumpster: mail15.ikea.com
+
+ [i] DOMAIN:  ford.com
+ [+] cert.sh: racing.ford.com
+ [+] cert.sh: bp3.ford.com
+ [+] cert.sh: mymustang.ford.com
+ [...]
+ [+] dnsdumpster: fcnimports60.ford.com
+ [+] dnsdumpster: lbbak3270.ford.com
+ [+] dnsdumpster: pah140.ford.com
+ ```
 
 ```bash
 ➜  GokGok git:(dev) ✗ go run gokgok.go -d ford.com -sd
- [i] INFO:  Checking for subdomains of ford.com in crt.sh
+ [i] INFO:  Checking for subdomains of ford.com
  [i] DOMAIN:  ford.com
- [+] SUBDOMAIN FOUND:  mymustang.ford.com
- [+] SUBDOMAIN FOUND:  build.ford.com
- [+] SUBDOMAIN FOUND:  shoppingtools.ford.com
- [+] SUBDOMAIN FOUND:  socialqa.ford.com
- [+] SUBDOMAIN FOUND:  vrmedia.ford.com
+ [+] cert.sh: mymustang.ford.com
+ [+] cert.sh: buildfoc.ford.com
+ [+] cert.sh: inventory.ford.com
+ [...]
+ [+] dnsdumpster: pah700.ford.com
+ [+] dnsdumpster: pah740.ford.com
+ [+] dnsdumpster: pah090.ford.com
 ```
 
 ## TODO
